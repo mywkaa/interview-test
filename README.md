@@ -1,4 +1,4 @@
-build doccker image:
+build docker image:
 ```
 docker build -t yousician-test:latest .
 ```
