@@ -70,7 +70,6 @@ def songs_avg_difficulty():
     if level:
         titles_by_specific_level = titles.query.filter_by(level=level).all()
         results = [result.as_dict_short_info() for result in titles_by_specific_level]
-        print(results)
         return jsonify(results)
     average_difficulty = db.session.query(db.func.avg(titles.difficulty))
     results = {"average_difficulty": average_difficulty.one()[0]}
@@ -86,7 +85,6 @@ def songs_search():
                 titles.artist.ilike(f"%{message}%"), titles.title.ilike(f"%{message}%")
             )
         )
-        print(search_query)
         results = [result.as_dict_short_info() for result in search_query.all()]
         return jsonify(results)
     return {"error": "Get parameter 'message' is not set"}, 404
@@ -94,7 +92,6 @@ def songs_search():
 
 @app.route("/songs/rating", methods=["GET", "POST"])
 def songs_rating_add():
-    print(1111111)
     title = titles.query.get_or_404(request.args.get("song_id", type=int))
     rating = request.args.get("rating", type=int)
     if rating < 1 or rating > 5:
